@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  database:
+    image: mysql:latest
+    container_name: database
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpma
+    links:
+      - database
+    environment:
+      PMA_HOST: database
+      PMA_PORT: 3306
+    restart: always
+    ports:
+      - 8181:80
+volumes:
+  dbdata:
