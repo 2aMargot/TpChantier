@@ -1,6 +1,7 @@
 package org.mdeza.tpchantier.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,8 +15,13 @@ public class User {
     protected Integer id;
 
     @Column(nullable = false)
+    @NotBlank
     protected String pseudo;
 
     @Column(nullable = false)
+    @NotBlank
     protected String password;
+
+    @ManyToOne(optional = false)
+    protected Role role;
 }
