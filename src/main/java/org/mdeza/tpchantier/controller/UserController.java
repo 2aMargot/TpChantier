@@ -1,7 +1,10 @@
 package org.mdeza.tpchantier.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import org.mdeza.tpchantier.dao.UserDao;
 import org.mdeza.tpchantier.model.User;
+import org.mdeza.tpchantier.view.TacheView;
+import org.mdeza.tpchantier.view.UserView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +24,7 @@ public class UserController {
     }
 
     @GetMapping("/user/{id}")
+    @JsonView(UserView.class)
     public ResponseEntity<User> get(@PathVariable int id){
 
         Optional<User> userOptional = userDao.findById(id);
@@ -33,11 +37,13 @@ public class UserController {
     }
 
     @GetMapping("/user/list")
+    @JsonView(UserView.class)
     public List<User> list(){
         return userDao.findAll();
     }
 
     @PostMapping("/user")
+    @JsonView(UserView.class)
     public String add(@RequestBody User newUser){
 //        if(newUser.getId() != null){
 //            Optional<User> userDb = userDao.findById(newUser.getId());
@@ -56,7 +62,8 @@ public class UserController {
     }
 
 
-    @DeleteMapping("/user/delete/{id}")
+    @DeleteMapping("/user/{id}")
+    @JsonView(UserView.class)
     public ResponseEntity<User> delete(@PathVariable int id){
         Optional<User> userToDelete = userDao.findById(id);
         if(userToDelete.isPresent()){

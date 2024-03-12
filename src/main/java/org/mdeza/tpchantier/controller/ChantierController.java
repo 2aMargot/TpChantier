@@ -1,10 +1,12 @@
 package org.mdeza.tpchantier.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.mdeza.tpchantier.dao.ChantierDao;
 import org.mdeza.tpchantier.model.Chantier;
+import org.mdeza.tpchantier.view.ChantierView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ public class ChantierController {
     ChantierDao chantierDao;
 
     @GetMapping("/chantier/{id}")
+    @JsonView(ChantierView.class)
     public ResponseEntity<Chantier> get(@PathVariable int id) {
 
         Optional<Chantier> chantierOptional = chantierDao.findById(id);
@@ -32,11 +35,13 @@ public class ChantierController {
     }
 
     @GetMapping("/chantier/list")
+    @JsonView(ChantierView.class)
     public List<Chantier> list() {
         return chantierDao.findAll();
     }
 
     @PostMapping("/chantier")
+    @JsonView(ChantierView.class)
     public ResponseEntity<Chantier> add(@Valid @RequestBody Chantier newChantier) {
         if (newChantier.getId() != null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -46,6 +51,7 @@ public class ChantierController {
     }
 
     @PutMapping("/chantier/{id}")
+    @JsonView(ChantierView.class)
     public ResponseEntity<Chantier> modifier(@Valid @RequestBody Chantier chantier, @PathVariable int id) {
         chantier.setId(id);
 
@@ -60,6 +66,7 @@ public class ChantierController {
     }
 
     @DeleteMapping("/chantier/{id}")
+    @JsonView(ChantierView.class)
     public ResponseEntity<Chantier> delete(@PathVariable int id) {
         Optional<Chantier> chantierOptional = chantierDao.findById(id);
 
